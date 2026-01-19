@@ -34,7 +34,7 @@ jobs:
       - name: Set Merge Gate Status
         if: github.event_name == 'pull_request'
         run: |
-          if [ "${{ steps.appscan.outcome }}" == "success" ]; then
+          if [ "${{ steps.appscan.outputs.high }}" = "0" ] && [ "${{ steps.appscan.outputs.critical }}" = "0" ]; then
             STATE="success"
             DESC="No High/Critical vulnerabilities found."
           else
