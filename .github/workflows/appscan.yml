@@ -22,4 +22,4 @@ jobs:
           asoc_secret: ${{ github.event_name == 'pull_request' && secrets.ASOC_PR_SECRET || secrets.ASOC_SECRET }}
           
           # Uses a specific App ID for PRs to keep reports separate
-          application_id: ${{ github.event_name == 'pull_request' && 'YOUR_PR_APP_ID_HERE' || '4dd230f8-d47c-4cc7-b509-d8b2ad93bf71' }}
+          application_id: ${{ github.event_name == 'pull_request' && 'YOUR_PR_APP_ID_HERE' || '38db1a5e-cb8a-4a9f-a0ca-810b93929e09' }}
