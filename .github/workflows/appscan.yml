@@ -23,3 +23,8 @@ jobs:
           
           # Uses a specific App ID for PRs to keep reports separate
           application_id: ${{ github.event_name == 'pull_request' && 'YOUR_PR_APP_ID_HERE' || '38db1a5e-cb8a-4a9f-a0ca-810b93929e09' }}
+          #Additional settings
+          static_analysis_only: true        # Disables SCA / Open Source scanning
+          wait_for_analysis: true           # Must be true to check results and fail build
+          fail_for_noncompliance: true      # Fails the job if policy is violated
+          failure_threshold: High           # Fails on High and Critical issues
