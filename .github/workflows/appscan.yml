@@ -1,15 +1,25 @@
 name: "HCL AppScan SAST"
+
 on:
-  workflow_dispatch
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+  workflow_dispatch:
+
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Run AppScan SAST scan
         uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.0.7
         with:
-          asoc_key: ${{secrets.ASOC_KEY}}
-          asoc_secret: ${{secrets.ASOC_SECRET}}
-          application_id: 4dd230f8-d47c-4cc7-b509-d8b2ad93bf71
+          # Uses PR secrets if it's a PR, otherwise uses standard secrets
+          asoc_key: ${{ github.event_name == 'pull_request' && secrets.ASOC_PR_KEY || secrets.ASOC_KEY }}
+          asoc_secret: ${{ github.event_name == 'pull_request' && secrets.ASOC_PR_SECRET || secrets.ASOC_SECRET }}
+          
+          # Uses a specific App ID for PRs to keep reports separate
+          application_id: ${{ github.event_name == 'pull_request' && 'YOUR_PR_APP_ID_HERE' || '4dd230f8-d47c-4cc7-b509-d8b2ad93bf71' }}
