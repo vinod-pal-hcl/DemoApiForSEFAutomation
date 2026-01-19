@@ -1,4 +1,9 @@
+
 name: "HCL AppScan SAST"
+
+permissions:
+  statuses: write
+  contents: read
 
 on:
   push:
