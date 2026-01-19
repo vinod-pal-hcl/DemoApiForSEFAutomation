@@ -120,6 +120,7 @@ This application should **NEVER** be deployed in a production environment or exp
 - Security training
 - Vulnerability scanning demonstrations
 - DevSecOps pipeline testing
+- New file modification
 
 ## License
 
