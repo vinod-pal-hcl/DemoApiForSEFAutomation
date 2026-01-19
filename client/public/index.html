@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!--
+    ==================================================================================
+    INTENTIONALLY VULNERABLE CODE - SAST TESTING PROJECT
+    ==================================================================================
+    This HTML file contains intentional security vulnerabilities including:
+    - Hardcoded API keys in inline scripts
+    - Loading scripts from untrusted sources
+    - XSS vulnerabilities
+    
+    FOR TESTING PURPOSES ONLY - DO NOT USE IN PRODUCTION
+    ==================================================================================
+  -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Vulnerable e-commerce application for SAST testing"
+    />
+    <title>Vulnerable E-Commerce App</title>
+    
+    <!-- Inline script with XSS - VULNERABILITY -->
+    <script>
+      var apiKey = 'pk_live_51HqLyjWDarjtT1zdp7dc';
+      var secretKey = 'hardcoded_secret_in_html';
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <div id="content"></div>
+    
+    <!-- External script from untrusted source - VULNERABILITY -->
+    <script src="http://untrusted-cdn.example.com/analytics.js"></script>
+  </body>
+</html>
