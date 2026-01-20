@@ -39,7 +39,7 @@ jobs:
             DESC="No High/Critical vulnerabilities found."
           else
             STATE="failure"
-            DESC="Merge blocked: High/Critical vulnerabilities detected."
+            DESC="${{ steps.appscan.outputs.critical }} critical and ${{ steps.appscan.outputs.high }} high vulnerabilities found, remediate them to allow PR merge."
           fi
           
           curl -X POST \
