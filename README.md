@@ -6,7 +6,7 @@
 
 This is a full-stack MERN (MongoDB, Express, React, Node.js) e-commerce application designed specifically for testing Static Application Security Testing (SAST) tools. It contains numerous security vulnerabilities, outdated dependencies, and insecure coding practices.
 
-## ⚠️ Security Vulnerabilities Included
+## ⚠️ Security Vulnerabilities Included g
 
 This application intentionally includes the following types of vulnerabilities:
 
@@ -120,6 +120,7 @@ This application should **NEVER** be deployed in a production environment or exp
 - Security training
 - Vulnerability scanning demonstrations
 - DevSecOps pipeline testing
+- New file modification
 
 ## License
 

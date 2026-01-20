@@ -1,4 +1,9 @@
+
 name: "HCL AppScan SAST"
+
+permissions:
+  statuses: write
+  contents: read
 
 on:
   push:
@@ -20,25 +25,14 @@ jobs:
         with:
           asoc_key: ${{ github.event_name == 'pull_request' && secrets.ASOC_PR_KEY || secrets.ASOC_KEY }}
           asoc_secret: ${{ github.event_name == 'pull_request' && secrets.ASOC_PR_SECRET || secrets.ASOC_SECRET }}
-          application_id: ${{ github.event_name == 'pull_request' && 'YOUR_PR_APP_ID' || secrets.APP_ID }}
+          application_id: ${{ github.event_name == 'pull_request' && secrets.ASOC_PR_APP_ID || secrets.APP_ID }}
           static_analysis_only: true
           wait_for_analysis: true
           fail_for_noncompliance: true
           failure_threshold: High
 
-      - name: Set Merge Gate Status
-        if: github.event_name == 'pull_request'
+      - name: Fail PR if High/Critical vulnerabilities found
+        if: github.event_name == 'pull_request' && (steps.appscan.outputs.high != '0' || steps.appscan.outputs.critical != '0')
         run: |
-          if [ "${{ steps.appscan.outcome }}" == "success" ]; then
-            STATE="success"
-            DESC="No High/Critical vulnerabilities found."
-          else
-            STATE="failure"
-            DESC="Merge blocked: High/Critical vulnerabilities detected."
-          fi
-          
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.event.pull_request.head.sha }} \
-            -d "{\"state\": \"$STATE\", \"target_url\": \"${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}\", \"description\": \"$DESC\", \"context\": \"AppScan Merge Gate\"}"
+          echo "${{ steps.appscan.outputs.critical }} critical and ${{ steps.appscan.outputs.high }} high vulnerabilities found, remediate them to allow PR merge."
+          exit 1
